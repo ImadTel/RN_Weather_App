@@ -10,15 +10,14 @@ import { View, Text,
 
 
 import axios from 'axios';
-import { useState,useEffect,useRef } from 'react';
+import { useState,useEffect, } from 'react';
 
 import InfoSlice from './InfoSlice';
 
 import ErrorScreen from '../components/ErrorScreen';
 import Icon from '../assets/icons/icon1.svg';
 
-import { useContext } from 'react';
-import AppContext from '../AppContext';
+import {weatherApiKey} from '@env'
 
 const WeatherInfos = ({request}) => {
 
@@ -33,51 +32,8 @@ const WeatherInfos = ({request}) => {
 
     const [loading,setLoading] =useState(true)
   
-
-    const [loadMore,setLoadMore] = useState(false)
-
-
     const [errorLoading,setErrorloading] = useState(false)
    
-
-
-
-
-
-
-    const loadTitle = () =>{
-        if(!loadMore) return 'Load more infos';
-        else return 'Less infos'
-      }
-
-
-    const loadMoreInfo = () =>{
-       if ( loadMore){
-          return (
-            <React.Fragment>
-              <InfoSlice title ="humidity" value={data.humidity} />
-              <InfoSlice title ="U v" value={data.uv} />
-              <InfoSlice title ="Wind direction" value={data.wind_dir} />
-              <InfoSlice title ="Wind direction" value={data.wind_dir} />
-              <InfoSlice title ="Wind speed (km/H)" value={data.wind_kph} />
-              <InfoSlice title ="Wind speed (km/H)" value={data.wind_kph} />
-              <InfoSlice title ="Wind direction" value={data.wind_dir} />
-              <InfoSlice title ="Wind direction" value={data.wind_dir} />
-              <InfoSlice title ="Wind speed (km/H)" value={data.wind_kph} />
-              <InfoSlice title ="Wind speed (km/H)" value={data.wind_kph} />
-          </React.Fragment>
-   
-          )
-        }
-       }
-
-
-const displaySvg = () =>{
-    if (loadMore ) return (
-      <Icon   style={styles.bottom}   /> 
-    )
-}
-
 
 const getTheWether = async () =>{
      
@@ -85,7 +41,7 @@ const getTheWether = async () =>{
   if(request)   try{
         setLoading(true);
       const weather = await axios
-      .get('http://api.weatherapi.com/v1/current.json?key=65d05bfa95de4c97964124340221306&q='+request+'&aqi=no')
+      .get('http://api.weatherapi.com/v1/current.json?key='+ weatherApiKey+ '&q='+request+'&aqi=no')
        
        .then( (res) =>{
         setData(res.data.current);
@@ -140,9 +96,12 @@ const getTheWether = async () =>{
   
        
         <View style={{flex:1,justifyContent:'space-between',alignItems:'flex-start' ,marginLeft:40 }}>
-         <Text style={{fontSize:24, color:'white',}}>{request}</Text>
+          <ScrollView  style={{maxHeight:65}}>
+                      <Text style={{fontSize:24, color:'black',fontFamily:'Montserrat-SemiBold'}}>{request}</Text>
+          </ScrollView>
+         
          <Text style={styles.infos}>{data.temp_c}°</Text>
-         <Text style={{fontSize:18, color:'white',}}>{data?.condition?.text}</Text>
+         <Text style={{fontSize:18, color:'black',fontFamily:'Montserrat-Regular'}}>{data?.condition?.text}</Text>
          </View>
   
          <View  style={{marginHorizontal:15,marginTop:20}}>
@@ -156,17 +115,49 @@ const getTheWether = async () =>{
 
 
      
-         <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center', minHeight:60,maxHeight:60,marginTop:5,marginBottom:10}}>
+         {/* <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center', minHeight:60,maxHeight:60,marginTop:5,marginBottom:10}}>
          <TouchableOpacity  onPress={()=>{setLoadMore(!loadMore)}} style={styles.btn} >
-           <Text style={{color:'white',fontSize:16}}>{loadTitle()}</Text>
+               <Text style={{color:'white',fontSize:16}}>{loadTitle()}</Text>
          </TouchableOpacity>
         
-     </View>
-     <ScrollView  style= {{marginTop:0, marginBottom:15,width:'100%'}}>
+         </View> */}
 
-     {loadMoreInfo()}
+         <View style={{paddingTop:25,flex:1,justifyContent:'flex-start',alignItems:'center',width:'100%', backgroundColor:'black'}}>
+         <View style={styles.infoArea}>
+          <Image  source={require('../assets/icons/Weather.png') }    
+          style={{position:'absolute', bottom:0,left:0, right:0,top:0, resizeMode:'contain', 
+          width:'100%' , height:'100%', zIndex:-1, opacity:0.5}}     />
+           <View style={styles.row}>
+             <Text style= {styles.textInfos}>Humidity</Text>
+             <Text style={styles.textInfos}>{data?.humidity }</Text>
+           </View>
+
+           <View style={{height:1, width:'70%',marginVertical:8, borderColor:'black',borderWidth:1 }}></View>
+
+           <View style={styles.row}>
+             <Text style= {styles.textInfos}>U V</Text>
+             <Text style={styles.textInfos}>{data?.uv }</Text>
+           </View>
+            
+           <View style={{height:1, width:'70%',marginVertical:8, borderColor:'black',borderWidth:1 }}></View>
+
+           <View style={styles.row}>
+             <Text style= {styles.textInfos}>Wind direction</Text>
+             <Text style={styles.textInfos}>{data?.wind_dir }</Text>
+           </View>
+
+            <View style={{height:1, width:'70%',marginVertical:8, borderColor:'black',borderWidth:1 }}></View>
+
+           <View style={styles.row}>
+             <Text style= {styles.textInfos}>Wind Speed</Text>
+             <Text style={styles.textInfos}>{data?.wind_kph }</Text>
+           </View>
+
+         </View>
+         </View>
+      
   
-     </ScrollView>
+ 
 
 
      </React.Fragment>
@@ -216,22 +207,22 @@ icon:{
   bottom:0
 },
 WeatherInfos:{
+  marginTop:0,
   flex:1,
-  maxHeight:140,
+  maxHeight:"30%",
   minHeight:130,
 
-  minWidth:140,
+  width:"100%",
   flexDirection:'row',
   justifyContent:'center',
   alignItems:'flex-start',
-  marginBottom:10,
-  
+  marginBottom:10,  
 
-  
 },
 infos:{
   fontSize:50,
-  color:'white'
+  color:'black',
+  fontFamily:'Montserrat-Regular'
 },
 btn:{
  
@@ -248,7 +239,40 @@ btn:{
    justifyContent:'center',
    backgroundColor:'rgba(27, 48, 73, 0.5)',
 
-}
+},
+infoArea:{
+  flex:3/5,
+  justifyContent:'flex-start',
+  alignItems:'center',
+  zIndex:1,
+  marginTop:10,
+  
+  shadowOffset:2,
+  shadowColor:'black',
+  marginBottom:5,
+  width:'90%',
+  borderRadius:5,
+  paddingVertical:8,
+  backgroundColor:'rgba(25,181,254,0.8)'
+
+},
+row:{
+  flex:1,
+  flexDirection:'row',
+  justifyContent:'space-between',
+  alignItems:'center',
+  width:'90%',
+  paddingBottom:3,
+  maxHeight:40,
+
+},
+textInfos:{
+  fontFamily:'Montserrat-SemiBold',
+  fontSize:18,
+  color:'black',
+  marginHorizontal:3,
+},
+
 
 });
 

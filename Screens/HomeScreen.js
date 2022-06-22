@@ -61,23 +61,21 @@ const HomeScreen = (props) => {
      // console.log("show Info called Ie componenet rerendered.....",inputCity,request,loading,locations.length,);
 
       if( request!="" && screen=="Astronomy") { return(
-        <View  style={{marginTop:25, flex:1,alignItems:'center',justifyContent:'center'}}>
+       
            <Astronomy  request={request} />
-        </View>
+   
        
       )
       }
-      if (  screen=="Time Zone" && request!=""  ) {return (
-        <View  style={{marginTop:25, flex:1,alignItems:'center',justifyContent:'center'}}>
+      if (  screen=="TimeZone" && request!=""  ) {return (
+    
         <TimeZone  request={request} />
-     </View>
+
         
        )}
 
      if (  screen=="Weather" &&request!=""  ) {return (
-      
-    <WeatherInfos request={request} />
-
+           <WeatherInfos request={request} />
      )
 
 
@@ -121,9 +119,9 @@ const HomeScreen = (props) => {
             setScreen={setScreen}  />
 
 
-  <View   style={{flex:1,width:'100%', justifyContent:'center',alignItems:'center'}}> 
-  {showInfos()}
-  </View> 
+    <View   style={{flex:1,width:'100%', justifyContent:'flex-start',marginTop:30,alignItems:'center'}}> 
+      {showInfos()}
+    </View>
 
         
     </View>

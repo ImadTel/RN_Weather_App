@@ -61,5 +61,6 @@ buck-out/
 /vendor/bundle/
 
 
+/android
 
 .env

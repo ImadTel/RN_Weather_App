@@ -9,16 +9,20 @@ const NavBar = ({screen,setScreen,setRequest,request}) => {
 const list=[{
     id:1,
    title:"Weather",
+   image : require('../assets/icons/Weather.png')
 
 },
 {
     id:2,
     title:"Astronomy",
+    image : require('../assets/icons/Astronomy.png'),
+    
 
 },
 {
     id:3,
-    title:"Time Zone",
+    title:"TimeZone",
+    image : require('../assets/icons/TimeZone.png')
 
 },
 
@@ -26,20 +30,21 @@ const list=[{
 
 
 const renderNavbar= (data) =>{
-
+      
     return(
        < NavButton screen={screen} 
        setScreen={setScreen} 
         request={request} 
         setRequest={setRequest}
-         title={data.item.title} />
+         item={data.item} 
+          />
     )
 }
 
 
   return (
     <View  style={styles.list} >
-        <FlatList    horizontal   data={list}   keyExtractor={item=> item.id}   renderItem={renderNavbar} />
+        <FlatList   horizontal   data={list}   keyExtractor={item=> item.id}   renderItem={renderNavbar} />
     </View>
   )
 }
@@ -48,8 +53,8 @@ const renderNavbar= (data) =>{
 const styles= StyleSheet.create({
     list:{
         maxHeight:50,
-        paddingHorizontal:5,
-        backgroundColor:'rgba(20,50,25,0.5)',
+        paddingHorizontal:3,
+        backgroundColor:'rgba(100,100,100,0.5)',
         flex:1,
         alignItems:'center',
         justifyContent:'center',

@@ -3,12 +3,7 @@ import React from 'react';
 import { useEffect,useState } from 'react';
 
 
-
-
-
-
-
-
+import {autoComplete_Api_Key} from '@env'
 
 
 
@@ -17,13 +12,6 @@ import { useEffect,useState } from 'react';
 
 
 const AutoComplete = ({inputCity,setinputCity,setRequest,setScreen, locations,setLocations, loading,setLoading}) => {
-
-  
-
-
-
-
-
 
 
     useEffect(()=>{
@@ -38,10 +26,11 @@ const AutoComplete = ({inputCity,setinputCity,setRequest,setScreen, locations,se
          
           const timer1 =  setTimeout(()=>{
           
-            const search =    fetch("https://api.geoapify.com/v1/geocode/autocomplete?text="+ inputCity+"&apiKey=0455e4591169413ea285e323a64f457e", requestOptions)
+            const search =    fetch("https://api.geoapify.com/v1/geocode/autocomplete?text="+ inputCity+"&apiKey="+autoComplete_Api_Key , requestOptions)
             .then(response => response.json())
             .then(result =>{
                             setLocations(result?.features);
+                            console.log(result?.features);
                             setLoading(false);
                             console.log('result of : ', inputCity )
             } )
@@ -80,7 +69,9 @@ const AutoComplete = ({inputCity,setinputCity,setRequest,setScreen, locations,se
        
              style={{height:40,backgroundColor:'rgba(200,200,200,0.8)',marginTop:2,flex:1,justifyContent:'center' }}
              >
-               <Text  style={{fontSize:13,color:'black', marginLeft:15}} >{item?.item?.properties?.formatted}</Text>
+               <Text  style={{fontSize:13,color:'black', marginLeft:15,}} >
+                {item?.item?.properties?.formatted}
+                </Text>
            </TouchableOpacity>
            
          )
@@ -104,12 +95,12 @@ const AutoComplete = ({inputCity,setinputCity,setRequest,setScreen, locations,se
             </View>
           )
         }
-    //    else  if (loading) return(
-    //     <View style={{height:40, backgroundColor:'grey'}}>
-    //            <ActivityIndicator  color={'red'} size={'large'} />
-    //     </View>
+       else  if (loading) return(
+        <View style={{height:40, backgroundColor:'grey'}}>
+               <ActivityIndicator  color={'red'} size={'large'} />
+        </View>
       
-    //    )
+       )
       
         return(
         <View style={{}}>

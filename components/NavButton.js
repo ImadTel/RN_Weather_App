@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, TouchableWithoutFeedbackBase} from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import React, { useState } from 'react'
 
 
@@ -6,17 +6,21 @@ import React, { useState } from 'react'
 
 
 
-const NavButton = ({setRequest,setScreen,screen,request,title}) => {
+const NavButton = ({setScreen,screen,request,item}) => {
 
  const tempRequest= request
 
   return (
-    <TouchableOpacity  onPress={()=>{setScreen( title);
+    <TouchableOpacity  onPress={()=>{setScreen( item.title);
       //  setRequest(tempRequest);
         
      } } 
-      style={{...styles.btn, backgroundColor: screen==title?'rgba(0,0,0,0.5)':'rgba(200,200,200,0.8)'}} >
-      <Text style={{...styles.text,color:screen==title?'white':'black'}}>{title}</Text>
+      style={{...styles.btn, backgroundColor: screen==item.title?'rgba(46, 204, 113,1)':'rgba(200,200,200,0.8)'}} >
+        <Image  source={item.image} 
+        style={{resizeMode:'contain' }}    width={30} height={30}   /> 
+        
+        <Text style={{...styles.text,color:screen==item.title?'white':'black'}}>{item.title}</Text>
+      
     </TouchableOpacity>
   )
 }
@@ -24,23 +28,27 @@ const NavButton = ({setRequest,setScreen,screen,request,title}) => {
 
 
 const styles =StyleSheet.create({
-    btn:{
+    btn:{ 
         alignSelf:'center',
         flex:1,
-        marginHorizontal:10,
+        flexDirection:'row',
+        marginHorizontal:4,
+        
         justifyContent:'center',
         alignItems:'center',
-        width:120,
-        height:26,
-        borderRadius: 13,
+        width:128,
+        height:40,
+        borderRadius: 10,
         
-        marginRight:3,
+        
         //opacity:0.5,
 
     },
     text:{
         color:'black',
-        fontSize:15,
+        marginLeft:5,
+        fontSize:14,
+        fontFamily:'Montserrat-SemiBold'
     }
 })
 

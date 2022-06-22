@@ -28,9 +28,9 @@ const SearchBar = ({inputCity,setinputCity,setLocations,setRequest,setScreen,set
 
 
   return (
-    <View style={[tw`flex-row  px-2 mt-2   items-center mb-1`,styles.topArea]} >
+    <View style={[tw`flex-row  px-2 items-center`,styles.topArea]} >
    
-    <Logo height='50' width='50'  style={tw`text-lg text-black mx-2 `}/>
+    <Logo height='50' width='50'  style={tw`text-lg text-black mx-1 `}/>
    
 
    <TextInput onSubmitEditing={()=>{if(!inputCity || inputCity.length==0) Keyboard.dismiss();  submit()} } 
@@ -68,7 +68,7 @@ export default SearchBar
 const styles = StyleSheet.create({
     input: {
         color:'white',
-        marginLeft:5,
+   
         width:'60%',
         height: 40,
         margin: 10,
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
   
       topArea:{
         
-          backgroundColor: 'rgba(27, 48, 73, 0.5)',
-          borderRadius:2,
+          backgroundColor: 'rgba(27, 48, 73, 1)',
+          backgroundColor: 'black',
           minHeight:80,
   
       },
